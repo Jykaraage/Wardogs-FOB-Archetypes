@@ -1,0 +1,3 @@
+[submodule "vendor/natural-japanese"]
+	path = vendor/natural-japanese
+	url = https://github.com/coji/natural-japanese.git

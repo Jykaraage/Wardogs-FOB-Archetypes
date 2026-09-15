@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "id": "mdf-30",
+  "name": "Mobile Dual-Drill FOB",
+  "status": "candidate_unvalidated",
+  "intent": "Rapidly deployable small FOB with dispersed critical assets and low abandonment cost.",
+  "reference_frame": {
+    "origin": "fob_core_center",
+    "x_axis": "right",
+    "y_axis": "nominal_front",
+    "unit": "m",
+    "rotation_allowed": true
+  },
+  "deployment": {
+    "builders": {"min": 3, "max": 4},
+    "tool": "Large Hammer",
+    "vehicles": {
+      "type": "Ural",
+      "min": 2,
+      "max": 3,
+      "vehicle_is_permanent_structure": false
+    }
+  },
+  "critical_nodes": [
+    {
+      "id": "core",
+      "type": "fob_core",
+      "x": 0.0,
+      "y": 0.0,
+      "footprint_bounding_radius_m": null,
+      "footprint_status": "needs_validation"
+    },
+    {
+      "id": "drill_a",
+      "type": "drill_rig",
+      "x": -15.0,
+      "y": 25.980762,
+      "footprint_bounding_radius_m": null,
+      "footprint_status": "needs_validation"
+    },
+    {
+      "id": "drill_b",
+      "type": "drill_rig",
+      "x": 15.0,
+      "y": 25.980762,
+      "footprint_bounding_radius_m": null,
+      "footprint_status": "needs_validation"
+    }
+  ],
+  "candidate_distances_m": {
+    "core__drill_a": 30.0,
+    "core__drill_b": 30.0,
+    "drill_a__drill_b": 30.0
+  },
+  "threat_model": {
+    "weapon": "L81 Mortar",
+    "effective_structure_damage_radius_m": {
+      "value": 10.0,
+      "source_id": "wardogs-zone-artillery",
+      "source_type": "community",
+      "confidence": "low",
+      "status": "assumption_pending_structure_test",
+      "note": "Published blast radius is not yet proven to equal effective damage radius against FOB Core or Drill Rig."
+    }
+  },
+  "validation_rules": {
+    "single_blast_multi_asset_prevention": {
+      "method": "expanded_footprint_non_overlap",
+      "bounding_circle_sufficient_condition": "d > r_i + 2*R + r_j",
+      "status": "blocked_on_footprint_and_damage_radius_validation"
+    },
+    "within_fob_build_area": {
+      "status": "blocked_on_build_area_geometry_validation"
+    },
+    "structure_collision_free": {
+      "status": "blocked_on_footprint_validation"
+    },
+    "ural_ingress_egress": {
+      "status": "not_yet_modeled"
+    }
+  },
+  "sources": [
+    "wardogs-steam-announcements",
+    "wardogs-hub-base",
+    "wardogs-zone-base",
+    "wardogs-zone-artillery",
+    "wardogs-calculator"
+  ]
+}

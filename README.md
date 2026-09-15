@@ -1,8 +1,8 @@
 # Wardogs FOB Archetypes
 
-WARDOGSで使用するFOB（Forward Operating Base）を、**再現可能なアーキタイプ**として設計・検証・共有するためのリポジトリです。
+WARDOGSで使用するFOB（Forward Operating Base）を、**再現可能なアーキタイプ**として設計・検証・共有するための研究リポジトリです。
 
-当面の研究対象は、Ural 2〜3台とLarge Hammerを持つ3〜4人で短時間に立ち上げ、敵の砲迫が集中した場合は早期に放棄・転進できる小規模FOBです。恒久要塞ではなく、投下資源・構築時間・損失時の影響を抑えた機動的な前線拠点を扱います。
+当面の対象は、Ural 2〜3台とLarge Hammerを持つ3〜4人で短時間に立ち上げ、敵の砲迫が集中した場合は早期に放棄・転進できる小規模FOBです。恒久要塞ではなく、投下資源・構築時間・損失時の影響を抑えた機動的な前線拠点を扱います。
 
 ## 最初の研究テーマ
 
@@ -16,7 +16,7 @@ WARDOGSで使用するFOB（Forward Operating Base）を、**再現可能なア�
 - 車両を恒久構造物として使わず、荷下ろし後に離脱できる導線を確保
 - ゲーム内マップ上のOverviewと、メートル単位のDetail図を分離
 
-`30 m`などの数値は、現時点では**候補値**です。現行ビルドで未確認の仕様を確定値として扱いません。
+`30 m`などの数値は現時点では**検証候補**です。現行ビルドで未確認の仕様を確定値として扱いません。
 
 ## Evidence policy
 
@@ -28,26 +28,43 @@ WARDOGSで使用するFOB（Forward Operating Base）を、**再現可能なア�
 4. コミュニティの観測・攻略情報
 5. 仮説・設計上の便宜的な値
 
-数値や仕様には、可能な限り`source_type`、`observed_at`、`game_build`、`confidence`を付けます。一次情報で確認できない値は、`assumption`として分離します。
+数値や仕様には、可能な限り`source_type`、`observed_at`、`game_build`、`confidence`を付けます。一次情報で確認できない値は`assumption`として分離します。詳細は[`docs/evidence-policy.md`](docs/evidence-policy.md)を参照してください。
 
 ## Repository layout
 
 ```text
 .
-├─ AGENTS.md                  # Codex / agent向け作業規約
+├─ AGENTS.md
 ├─ docs/
-│  ├─ design-principles.md    # FOBアーキタイプの設計原則
-│  ├─ evidence-policy.md      # 根拠の優先順位と記録方式
-│  ├─ research-plan.md        # ゲーム内実測の計画
-│  └─ tooling.md              # マップ・詳細図の描画ツール調査
+│  ├─ design-principles.md
+│  ├─ evidence-policy.md
+│  ├─ research-plan.md
+│  └─ tooling.md
 ├─ archetypes/
 │  └─ mdf-30/
-│     ├─ README.md            # MDF-30候補案
-│     └─ archetype.json       # 機械可読な設計パラメータ
+│     ├─ README.md
+│     └─ archetype.json
 ├─ data/
-│  └─ source-register.md      # 外部情報源の台帳
-└─ skills/
-   └─ natural-japanese/       # coji/natural-japaneseを固定版で取り込み
+│  ├─ source-register.md
+│  └─ measurements.example.json
+├─ skills/
+│  └─ natural-japanese -> ../vendor/natural-japanese/skills/natural-japanese
+└─ vendor/
+   └─ natural-japanese/       # pinned git submodule
+```
+
+## Setup
+
+`natural-japanese`は固定コミットのsubmoduleとして取り込み、`skills/natural-japanese`から参照します。
+
+```bash
+./scripts/bootstrap.sh
+```
+
+手動で行う場合は次のとおりです。
+
+```bash
+git submodule update --init --recursive
 ```
 
 ## Working rules
@@ -56,8 +73,9 @@ WARDOGSで使用するFOB（Forward Operating Base）を、**再現可能なア�
 - 変更されやすいゲーム仕様をコードへ直書きせず、データとして外出しする。
 - 配置は絶対座標ではなくローカル座標で定義し、任意地点へ平行移動・回転可能にする。
 - Overviewはゲーム内と一致するマップ画像／座標系を使い、Detailは1 m単位で寸法・footprint・危険域を読める図にする。
-- 文書の日本語は`skills/natural-japanese`を用いて最終校正する。
+- 重要な日本語ドキュメントは`skills/natural-japanese`で推敲・検査する。
+- WARDOGSのゲーム画像・マップタイル等は、ライセンスを確認せず第三者コードのライセンス対象とみなさない。
 
-## Status
+## Current status
 
-研究用の骨格を構築中です。`MDF-30`の確定前に、少なくとも迫撃砲の構造物に対する実効加害範囲、FOB build zone、Drill Rigの挙動、Core破壊時の依存関係を現行ビルドで再確認します。
+`MDF-30`の確定前に、少なくとも迫撃砲の構造物に対する実効加害範囲、FOB build zoneの形状と境界、Drill Rigの挙動、Core破壊時の依存関係、複数Builderによる建築速度を現行ビルドで確認します。

@@ -1,0 +1,15 @@
+# Local/generated artifacts
+output/
+assets/raw-map-tiles/
+assets/cache/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "session": {
+    "observed_at": "2026-09-15T00:00:00+09:00",
+    "game_build": "UNKNOWN",
+    "map": "UNKNOWN",
+    "server": "UNKNOWN",
+    "observers": 1
+  },
+  "measurements": [
+    {
+      "id": "example-fob-build-boundary-north",
+      "claim": "fob_build_boundary",
+      "value": null,
+      "unit": "m",
+      "source_type": "in_game_verified",
+      "confidence": "unknown",
+      "trials": [],
+      "evidence": [],
+      "notes": "Replace this example with measured data."
+    }
+  ]
+}
